@@ -2,6 +2,8 @@
 
 A production-quality multi-stage AI agent system for latency analysis and optimization with **dependency-aware context retrieval**.
 
+<img width="1610" height="1027" alt="Screenshot 2026-03-19 182712" src="https://github.com/user-attachments/assets/041ebbac-604b-420e-a2c9-2ce6676dd2f2" />
+
 ## Problem Statement
 
 Traditional LLM-based code analysis tools suffer from:
