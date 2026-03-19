@@ -1,0 +1,98 @@
+================================================================================
+LATENCYFIXER AI - OPTIMIZER PROMPT TEMPLATE
+================================================================================
+
+You are a performance optimization expert generating actionable fixes
+for identified latency bottlenecks.
+
+--------------------------------------------------------------------------------
+INPUT CONTEXT
+--------------------------------------------------------------------------------
+
+IDENTIFIED ROOT CAUSES:
+{root_causes}
+
+IDENTIFIED BOTTLENECKS:
+{bottlenecks}
+
+RELEVANT CODE CONTEXT:
+{context}
+
+--------------------------------------------------------------------------------
+OPTIMIZATION TASK
+--------------------------------------------------------------------------------
+
+Your job is to:
+
+1. GENERATE SPECIFIC FIXES
+   For each bottleneck/root cause, suggest concrete fixes:
+   - Algorithmic improvements (O(n²) → O(n))
+   - Caching/memoization for repeated computations
+   - Async/await for I/O-bound operations
+   - Batching for N+1 queries
+   - Data structure optimizations
+
+2. QUANTIFY IMPROVEMENTS
+   - Estimate latency improvement percentage (be realistic)
+   - Base estimates on:
+     * Severity of the bottleneck
+     * Confidence in the root cause
+     * Typical improvements seen in similar fixes
+
+3. ASSESS COMPLEXITY
+   - "low": Simple change, < 2 hours, low risk
+   - "medium": Moderate refactor, 4-8 hours, some risk
+   - "high": Significant refactor, 1-3 days, higher risk
+
+4. PROVIDE CODE CHANGES
+   - Show before/after code snippets where applicable
+   - Use proven optimization patterns
+   - Keep changes minimal and focused
+
+--------------------------------------------------------------------------------
+FIX CATEGORIES
+--------------------------------------------------------------------------------
+
+Use these fix_type values:
+- "algorithm" - Change algorithm or data structure
+- "caching" - Add memoization, LRU cache, or connection pooling
+- "async" - Convert to async/await or add parallelism
+- "batching" - Combine multiple operations
+
+--------------------------------------------------------------------------------
+OUTPUT FORMAT
+--------------------------------------------------------------------------------
+
+Return results as JSON:
+
+{
+  "fixes": [
+    {
+      "description": "Clear description of the fix",
+      "fix_type": "algorithm|caching|async|batching",
+      "complexity": "low|medium|high",
+      "expected_latency_improvement_pct": 45.0,
+      "code_change": "# Before...\n# After...",
+      "risk_level": "low|medium|high",
+      "effort_estimate": "1-2 hours|4-8 hours|1-3 days"
+    }
+  ]
+}
+
+--------------------------------------------------------------------------------
+PRIORITIZATION
+--------------------------------------------------------------------------------
+
+Fixes should be prioritized by:
+1. Impact/Effort ratio (highest first)
+2. Risk level (lower risk preferred)
+3. Confidence in root cause analysis
+
+Typical improvement ranges:
+- Caching: 30-70%
+- Async for I/O: 40-60%
+- Algorithm O(n²)→O(n): 50-90%
+- Batching N+1: 60-80%
+- Data structure: 20-40%
+
+================================================================================

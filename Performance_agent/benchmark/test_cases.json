@@ -1,0 +1,20 @@
+[
+  {
+    "name": "Streaming Latency Issue",
+    "logs": "ERROR: Streaming response timeout after 5200ms\nWARNING: Buffer overflow detected in stream_handler.py:142\nStack trace:\n  File 'stream_handler.py', line 142, in process_chunk\n    await self.buffer.write(data)\n  File 'async_buffer.py', line 89, in write\n    await self._flush_pending()\n  File 'async_buffer.py', line 102, in _flush_pending\n    await asyncio.sleep(0.1)  # BLOCKING DELAY\nLatency breakdown:\n  - Initial connection: 45ms\n  - First chunk: 180ms\n  - Subsequent chunks: 890ms avg (expected: <100ms)\n  - Total stream time: 5200ms (expected: <1000ms)",
+    "code": "import asyncio\nclass StreamHandler:\n    async def process_chunk(self, data):\n        await asyncio.sleep(0.1)  # Simulated delay\n        return data",
+    "expected_focus": "latency"
+  },
+  {
+    "name": "Audio Overlap Issue",
+    "logs": "WARNING: TTS playback started while user is speaking\nINFO: User speech detected at 00:01:12.300\nINFO: TTS started at 00:01:12.350\nERROR: Overlap detected: TTS and user speech\nNo interruption event triggered.",
+    "code": "def play_tts(audio):\n    # Should check if user is speaking\n    play(audio)",
+    "expected_focus": "concurrency"
+  },
+  {
+    "name": "Inefficient Code",
+    "logs": "INFO: Running batch process\nINFO: Processing 1000 items\nWARNING: Slow execution detected\nTotal time: 12.5s (expected <2s)",
+    "code": "def slow_func(items):\n    for i in items:\n        for j in items:\n            if i != j:\n                pass  # O(n^2)\n    return True",
+    "expected_focus": "algorithm"
+  }
+]

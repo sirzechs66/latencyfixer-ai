@@ -1,0 +1,56 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+build/
+.pytest_cache/
+
+# Virtual environments
+.env/
+.venv/
+# Pip / setuptools
+pip-wheel-metadata/
+share/python-wheels/
+
+# Editor directories and files
+.vscode/
+.idea/
+*.swp
+*~
+.DS_Store
+
+# Logs
+logs/
+*.log
+test_logs.txt
+
+# Local config
+.env
+.env.*
+secrets.*
+
+node_modules/
+frontend/node_modules/
+frontend/dist/
+frontend/build/
+npm-debug.log*
+pnpm-debug.log*
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+
+# Temporary files
+*.tmp
+*.temp
+
+# Performance_agent outputs
+output/
+frontend/.vite/
+
+# Ignore env used by deployment
+.env.local
+
+# Ignore VS Code workspace settings and Claude local config
+.vscode/
+.claude/
+.claude*

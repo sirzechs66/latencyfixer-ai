@@ -1,0 +1,123 @@
+# LatencyFixer AI - Cursor Rules
+
+This file enforces structured AI-assisted code analysis and optimization.
+
+## Core Requirements
+
+When analyzing latency or performance issues, you MUST follow this structure:
+
+### 1. Root Cause Analysis
+- Identify the SPECIFIC root cause (not vague)
+- Categorize: io | compute | memory | concurrency | algorithm
+- Provide confidence score (0.0-1.0)
+- List evidence from logs/code
+
+### 2. Bottleneck Detection
+- Quantify impact in milliseconds
+- Classify severity: critical | high | medium | low
+- Specify exact location (file:function:line)
+
+### 3. Optimization Suggestions
+- Provide concrete fix with code change
+- Estimate latency improvement percentage (%)
+- Assign complexity: low | medium | high
+- Include effort estimate (hours/days)
+
+### 4. Scoring
+- Calculate score on 1-10,000 scale
+- Use weighted formula:
+  - Latency Gain: 35%
+  - Accuracy: 25%
+  - Stability: 15%
+  - Clarity: 15%
+  - Context Efficiency: 10%
+
+### 5. Output Format
+ALWAYS output structured JSON:
+
+```json
+{
+  "root_causes": [...],
+  "bottlenecks": [...],
+  "fixes": [...],
+  "metrics": {...},
+  "final_score": 0000,
+  "benchmark_comparison": {...}
+}
+```
+
+## Prohibited Patterns
+
+DO NOT:
+- Give vague suggestions like "optimize this function"
+- Provide unquantified improvements ("should be faster")
+- Miss file/function locations
+- Skip confidence scores
+- Ignore dependency context
+
+## Required Patterns
+
+DO:
+- Reference specific line numbers
+- Show before/after code snippets
+- Quantify expected improvement (e.g., "45% reduction")
+- Assign risk levels to fixes
+- Compare against baseline approach
+
+## Context Engineering
+
+Use dependency-aware retrieval:
+- Extract entities from logs (files, functions)
+- Expand to direct imports (depth 1)
+- Include caller/callee relationships (depth 2 max)
+- Calculate context efficiency score
+
+## Example Output
+
+```json
+{
+  "root_causes": [
+    {
+      "description": "Blocking time.sleep() in async path",
+      "category": "concurrency",
+      "confidence": 0.92,
+      "evidence": ["Line 45: time.sleep(0.05)", "Stack trace shows blocking"],
+      "file_path": "audio_queue.py",
+      "function_name": "_play_next"
+    }
+  ],
+  "bottlenecks": [
+    {
+      "description": "50ms blocking sleep per audio track",
+      "location": "audio_queue.py:_play_next:45",
+      "severity": "high",
+      "impact_type": "latency",
+      "estimated_impact_ms": 50
+    }
+  ],
+  "fixes": [
+    {
+      "description": "Replace time.sleep with asyncio.sleep",
+      "fix_type": "async",
+      "complexity": "low",
+      "expected_latency_improvement_pct": 45.0,
+      "code_change": "await asyncio.sleep(0.05) instead of time.sleep(0.05)",
+      "risk_level": "low",
+      "effort_estimate": "1-2 hours"
+    }
+  ],
+  "metrics": {
+    "latency_gain": 0.72,
+    "accuracy": 0.85,
+    "stability": 0.90,
+    "clarity": 0.82,
+    "context_efficiency": 0.65
+  },
+  "final_score": 7680,
+  "benchmark_comparison": {
+    "agent_score": 7680,
+    "claude_score": 5200,
+    "summary": "LatencyFixer AI outperforms baseline by 47.7%"
+  }
+}
+```
